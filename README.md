@@ -1,60 +1,64 @@
-#Cloud SOC & Honeynet in Azure (Live Attacks Tracked)
+# Building a SOC and Honeynet in Azure (Live Traffic Monitoring)
 
 ![Cloud Honeynet / SOC](https://i.imgur.com/ZWxe03e.jpg)
 
-## What’s This All About?
+## Overview
 
-This project walks you through how I built a small honeynet in Azure. I hooked it up to a Log Analytics Workspace and fed that data straight into Microsoft Sentinel to map attacks, fire off alerts, and open incidents.
+In this project, I set up a small honeynet in Microsoft Azure to simulate real-world attacks. Logs from various resources were ingested into a Log Analytics Workspace and monitored using Microsoft Sentinel.
 
-I let the environment sit exposed for 24 hours, collected the chaos, then locked it down with some solid security controls. After that, I let it run another 24 hours and pulled the new numbers to see how things changed. Here’s what I tracked:
+The environment was left unsecured for 24 hours to observe attack activity. After collecting baseline metrics, I applied a series of security controls and monitored the environment for another 24 hours to compare results.
 
-* **SecurityEvent** (Windows Event Logs)
-* **Syslog** (Linux Event Logs)
-* **SecurityAlert** (Triggered Alerts)
-* **SecurityIncident** (Sentinel Incidents)
-* **AzureNetworkAnalytics\_CL** (Malicious traffic that got through)
+### Metrics Tracked:
 
-## Before Lockdown (Everything Wide Open)
+* **SecurityEvent** (Windows event logs)
+* **Syslog** (Linux event logs)
+* **SecurityAlert** (Alerts triggered in Sentinel)
+* **SecurityIncident** (Incidents created in Sentinel)
+* **AzureNetworkAnalytics\_CL** (Malicious inbound traffic allowed by NSGs)
+
+## Architecture
+
+### Before Applying Security Controls
 
 ![Architecture Diagram](https://i.imgur.com/aBDwnKb.jpg)
 
-## After Lockdown (Fort Knox Mode)
+### After Applying Security Controls
 
 ![Architecture Diagram](https://i.imgur.com/YQNa9Pp.jpg)
 
-The honeynet setup looked like this:
+The Azure honeynet included:
 
-* Virtual Network (VNet)
-* Network Security Group (NSG)
-* 2 Windows VMs + 1 Linux VM
+* A virtual network (VNet)
+* Network security groups (NSGs)
+* Three virtual machines (2 Windows, 1 Linux)
 * Log Analytics Workspace
 * Azure Key Vault
 * Azure Storage Account
 * Microsoft Sentinel
 
-Before I hardened it, everything was exposed to the internet. Firewalls and NSGs? Basically nonexistent. No private endpoints, just raw and open.
+In the initial setup, the environment was intentionally left open to the internet. All VMs had minimal firewall and NSG restrictions. Resources were publicly accessible, with no private endpoints configured.
 
-After locking it down, I shut the doors. NSGs were tightened to only allow traffic from my admin box. Other resources got firewalled and hidden behind private endpoints.
+After the first data collection phase, the environment was secured. NSGs were tightened to only allow traffic from a specific management workstation, and all public access was removed using private endpoints and firewall rules.
 
-## What the Attackers Were Up To (Pre-Hardening)
+## Pre-Hardening Attack Visualization
 
 ![image](https://github.com/user-attachments/assets/d6e3a6d7-9418-40c1-ba94-69e1c9be6296)<br>
 ![image](https://github.com/user-attachments/assets/8fedae24-a7c0-4752-9fc4-98b89c8219fa)<br>
 ![image](https://github.com/user-attachments/assets/993d00f2-ef9a-4bbe-b2c6-1e1fe8d12f12)<br>
 ![image](https://github.com/user-attachments/assets/fad25459-3d37-4e35-99bc-156b03ae25bf)
 
-## Microsoft Sentinel in Action (KQL on Deck)
+## Sentinel Automation with KQL
 
-I automated alerts and incidents using Sentinel’s KQL rules, making sure the SOC was loud and reactive when stuff went down.
+Microsoft Sentinel was used to create alert rules and automate incident response using KQL queries.
 
 ![image](https://github.com/user-attachments/assets/175448d7-b5f3-4fce-9af9-b0f5a5b8cc6f)
 ![image](https://github.com/user-attachments/assets/184b44f4-2786-4a92-b93d-b8504e39798d)
 
-I followed the NIST 800-61 incident response playbook to manage incidents and sharpen threat visibility across the whole setup.
+Incident handling followed the NIST 800-61 Incident Response Lifecycle, improving detection and response efficiency.
 
 ![image](https://github.com/user-attachments/assets/472fbaa7-d396-4f61-a607-0909b523ad2b)
 
-## Raw Stats Before Lockdown
+## Metrics: Before Hardening
 
 **Timeframe:**
 Start: 2024-06-18 13:54
@@ -68,14 +72,14 @@ End: 2024-06-19 13:54
 | SecurityIncident              | 288    |
 | Malicious Flows Allowed (NSG) | 1,808  |
 
-## Locking It Down with Defender for Cloud
+## Improving Security with Microsoft Defender for Cloud
 
-Enabled Microsoft Defender for Cloud, added NIST compliance, slapped private endpoints and NSG rules on everything. No more public exposure.
+Microsoft Defender for Cloud was enabled to enhance security posture. Regulatory compliance settings were activated, and public access was blocked using private endpoints, NSGs, and firewalls.
 
 ![image](https://github.com/user-attachments/assets/9ba6e854-f9cf-4dc5-8514-66a1dd0cbf85)
 ![image](https://github.com/user-attachments/assets/fda85ef3-a078-4960-9b38-4ed753aaa0f4)
 
-## Raw Stats After Lockdown
+## Metrics: After Hardening
 
 **Timeframe:**
 Start: 2024-06-19 23:02
@@ -91,12 +95,8 @@ End: 2024-06-20 23:02
 
 ![image](https://github.com/user-attachments/assets/e940e227-2039-4286-8920-63122bd0c3a9)
 
-## Wrap Up
+## Final Thoughts
 
-This whole project was about turning an open, vulnerable environment into a hardened one—and watching how that flipped the script. Sentinel helped catch the noise, and once I locked things down, the noise dropped off a cliff.
-
-If this setup was powering production workloads with users hitting it daily, we’d expect more signals post-hardening. But even in this test run, the results speak for themselves.
+This project demonstrated how exposing an environment to the internet attracts malicious activity, and how applying the right security controls can drastically reduce it. Microsoft Sentinel and Defender for Cloud provided clear visibility into threats and helped automate response and containment.
 
 ---
-
-Let me know if you want a version that tones it down or adds anything else.
