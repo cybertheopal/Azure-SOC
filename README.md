@@ -10,11 +10,11 @@ The environment was left unsecured for 24 hours to observe attack activity. Afte
 
 ### Metrics Tracked:
 
--SecurityEvent (Windows event logs)
--Syslog (Linux event logs)
--SecurityAlert (Alerts triggered in Sentinel)
--SecurityIncident (Incidents created in Sentinel)
--AzureNetworkAnalytics\_CL (Malicious inbound traffic allowed by NSGs)
+- SecurityEvent (Windows Event Logs)
+- Syslog (Linux Event Logs)
+- SecurityAlert (Log Analytics Alerts Triggered)
+- SecurityIncident (Incidents created by Sentinel)
+- AzureNetworkAnalytics_CL (Malicious Flows allowed into our honeynet)
 
 ## Architecture
 
