@@ -97,6 +97,6 @@ End: 2024-12-20 23:02
 
 ## Final Thoughts
 
-This project demonstrated how exposing an environment to the internet attracts malicious activity, and how applying the right security controls can drastically reduce it. Microsoft Sentinel and Defender for Cloud provided clear visibility into threats and helped automate response and containment.
+This project demonstrated how exposing the environment to the internet attracts malicious activity, and how applying the right security controls can drastically reduce it. Microsoft Sentinel and Defender for Cloud provided clear visibility into threats and helped automate response and containment.
 
 ---
