@@ -61,8 +61,8 @@ Incident handling followed the NIST 800-61 Incident Response Lifecycle, improvin
 ## Metrics: Before Hardening
 
 **Timeframe:**
-Start: 2024-12-18 13:54
-End: 2024-12-19 13:54
+Start: 2025-01-18 13:54
+End: 2025-01-19 13:54
 
 | Metric                        | Count  |
 | ----------------------------- | ------ |
@@ -82,8 +82,8 @@ Microsoft Defender for Cloud was enabled to enhance security posture. Regulatory
 ## Metrics: After Hardening
 
 **Timeframe:**
-Start: 2024-12-19 23:02
-End: 2024-12-20 23:02
+Start: 2025-01-19 23:02
+End: 2025-01-20 23:02
 
 | Metric                        | Count  |
 | ----------------------------- | ------ |
